@@ -1,3 +1,11 @@
+/*
+ * C++ Classes Media Lister
+ * ADD, SEARCH, and DELETE games, movies, and music to your Media List.
+ * Program will keep track of different data types for each using classes.
+ * 11/10/2024
+ * Santiago Gaete
+ */
+
 #include "Media.h"
 
 #include "Game.h"
