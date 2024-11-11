@@ -10,17 +10,15 @@ using namespace std;
 
 void add(vector<Media*> &med);
 void search(vector<Media*> &med);
-
-/*to be implemented:
-void deleter(vector<Media*> &med);
-void quit(vector<Media*> &med, bool &input);*/
+//void deleter(vector<Media*> &med);
+//void quit(vector<Media*> &med, bool &input);
 
 int main() {
 
   vector<Media*> med;
   
   bool input = true;
-  while (input == true) { //CHANGE TO SWITCH LATER
+  while (input == true) {
 
     cout << "Input a command." << endl;
     char command[6] = "";
@@ -47,19 +45,15 @@ int main() {
       cout << "Invalid input! Try again." << endl;
     }
   }
-  cout << "Quitting program!" << endl;
+  cout << "hello" << endl;
   return 0;
 }
 
-void add(vector<Media*> &med) { //adder function
-  cout << "GAME, MOVIE, or MUSIC?" << endl;
-  char medType[6] = "";
-  
-  //create temporary variables for object creation
+void add(vector<Media*> &med) {
+  cout << "GAME. MOVIE, or MUSIC?" << endl;
+  char medType[5] = "";
   char tempTitle[80];
   int tempYear;
-
-  //get media type
   cin >> medType;
   cin.ignore();
 
@@ -77,11 +71,11 @@ void add(vector<Media*> &med) { //adder function
     cin >> tempRat;
     cin.ignore();
 
-    Game* nGame = new Game(tempTitle, tempYear, tempPub, tempRat); //create obj using temps
-    med.push_back(nGame); //add to vector of Media ptrs
-    nGame->print(); //print back out to user for confirmation
+    Game* nGame = new Game(tempTitle, tempYear, tempPub, tempRat);
+    med.push_back(nGame);
+    nGame->print();
   }
-  else if (strcmp(medType, "MOVIE") == 0) { //repeat but for movie
+  else if (strcmp(medType, "MOVIE") == 0) {
     char tempDirector[80];
     int tempDur;
     int tempRat;
@@ -103,7 +97,7 @@ void add(vector<Media*> &med) { //adder function
     med.push_back(nMovie);
     nMovie->print();
   }
-  else if (strcmp(medType, "MUSIC") == 0) { //repeat but for music
+  else if (strcmp(medType, "MUSIC") == 0) {
     char tempArtist[80];
     char tempPub[80];
     int tempDur;
@@ -124,23 +118,22 @@ void add(vector<Media*> &med) { //adder function
     med.push_back(nMusic);
     nMusic->print();
   }
-  else { //if not type, kick back to command input
-    cout << "Invalid type!" << endl;
+  else {
+    cout << "uh oh" << endl;
   }
 }
 
-void search(vector<Media*> &med) { //search med vector for all elements that match title or year
+void search(vector<Media*> &med) {
   cout << "Would you like to search by TITLE or YEAR?" << endl;
   char selector[6] = "";
   cin >> selector;
   cin.ignore();
-  
-  if (strcmp(selector, "TITLE") == 0) { //if cstring matches
+  if (strcmp(selector, "TITLE") == 0) {
     char searcher[80];
     cin.getline(searcher, 80, '\n');
     for (auto it = med.begin(); it != med.end(); ++it) { //iterator to look through vect
       if (strcmp((*it)->getTitle(), searcher)) {
-	(*it)->print(); //if we succeed, print it out as a search result
+	(*it)->print();
       }
     }
   }

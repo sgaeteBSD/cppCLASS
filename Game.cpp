@@ -8,11 +8,11 @@ Game::Game(char* title, int year, char* publisher, int rating) : Media(title, ye
   this->rating = rating; //copy passed in rating into object's rating
 }
 
-Game::~Game() {
+Game::~Game() { //destructor
   delete[] publisher;
 }
 
-void Game::print() {
+void Game::print() { //virtual override of Media's print
   cout << "Video Game: " << title << ", Year: " << year << ", Publisher: " << publisher << ", Rating: "
        << rating << "/10" << endl;
 }
