@@ -24,15 +24,10 @@ int main() {
 
     cout << "Input a command." << endl;
     char command[6] = "";
-
     cin >> command;
     cin.ignore();
 
     if (strcmp(command, "ADD") == 0) {
-      cout << med.size() << endl;
-      if (med.size() >= 1) {
-	med[0]->print();
-      }
       add(med);
       input = true; //run command loop again
     }
@@ -144,7 +139,6 @@ void search(vector<Media*> &med) { //search med vector for all elements that mat
     cout << "Enter title:" << endl;
     char searcher[80];
     cin.getline(searcher, 80, '\n');
-    cout << "Search results:" << endl;
     for (auto it = med.begin(); it != med.end(); ++it) { //iterator to look through vect
       if (strcmp((*it)->getTitle(), searcher) == 0) {
 	(*it)->print(); //if we succeed, print it out as a search result
@@ -157,7 +151,6 @@ void search(vector<Media*> &med) { //search med vector for all elements that mat
     int searcherInt;
     cin >> searcherInt;
     cin.ignore();
-    cout << "Search results:" << endl;
     for (auto it = med.begin(); it != med.end(); ++it) { //iterator to look through vect
       if ((*it)->getYear() == searcherInt) {
 	(*it)->print(); //if we succeed, print it out as a search result
@@ -172,7 +165,7 @@ void search(vector<Media*> &med) { //search med vector for all elements that mat
 }
 
 void deleter(vector<Media*> &med) { //search med vector for all elements that match title or year
-  cout << "Would you like to search by TITLE or YEAR?" << endl;
+  cout << "Would you like to delete by TITLE or YEAR?" << endl;
   char selector[6] = "";
   cin >> selector;
   cin.ignore();
@@ -183,17 +176,23 @@ void deleter(vector<Media*> &med) { //search med vector for all elements that ma
     cout << "Enter title:" << endl;
     char searcher[80];
     cin.getline(searcher, 80, '\n');
-    for (auto it = med.begin(); it != med.end(); ++it) { //iterator to look through vect
+    for (auto it = med.begin(); it != med.end();) { //iterator to look through vect
       if (strcmp((*it)->getTitle(), searcher) == 0) {
-	cout << "Would you like to delete the following media? (y/n)" << endl;
+	cout << "Would you like to delete the following media? (confirm with 'Y')" << endl;
 	(*it)->print();
 	cin >> confirm;
-	if (confirm == 'y') {
+	if (confirm == 'Y') {
 	  cout << (*it)->getTitle() << " has been deleted." << endl;
-	  delete *it;
-	  med.erase(it);
+	  delete *it; //free memory
+	  med.erase(it); //erase element
 	  result = true;
 	}
+	else { //increment if not erasing
+	  ++it;
+	}
+      }
+      else { //increment if not matching
+	++it;
       }
     }
   }
@@ -202,11 +201,23 @@ void deleter(vector<Media*> &med) { //search med vector for all elements that ma
     int searcherInt;
     cin >> searcherInt;
     cin.ignore();
-    cout << "Search results:" << endl;
-    for (auto it = med.begin(); it != med.end(); ++it) { //iterator to look through vect
+    for (auto it = med.begin(); it != med.end();) { //iterator to look through vect
       if ((*it)->getYear() == searcherInt) {
-	(*it)->print(); //if we succeed, print it out as a search result
-	result = true;
+	cout << "Would you like to delete the following media? (confirm with 'Y')" << endl;
+	(*it)->print();
+	cin >> confirm;
+	if (confirm == 'Y') {
+	  cout << (*it)->getTitle() << " has been deleted." << endl;
+	  delete *it;
+	  med.erase(it);
+	  result = true;
+	}
+	else {
+	  ++it;
+	}
+      }
+      else {
+	++it;
       }
     }
   }
@@ -215,15 +226,6 @@ void deleter(vector<Media*> &med) { //search med vector for all elements that ma
   }
   
 }
-
-  /*char* temp = new char[80];
-  char* temp2 = new char[80];
-  strcpy(temp, "Game1");
-  strcpy(temp2, "Publisher1");
-  Game* game1 = new Game(temp, 2006, temp2, 9);
-  med.push_back(game1);
-  cout << med[0]->getTitle() << endl;
-  */
 
 void quit(vector<Media*> &med, bool &input) {
   input = false; //end loop (passed by reference)
